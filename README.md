@@ -64,7 +64,7 @@ terraform apply
 If you want to destroy the resource, make sure the instance is already in ``running`` status, otherwise the destroy might fail.
 
 ```
-terraform destory
+terraform destroy
 ```
 
 ## Developer Guide
