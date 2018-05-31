@@ -6,6 +6,22 @@ import (
 	"github.com/hashicorp/terraform/helper/resource"
 )
 
+func TestDataSourceTencentCloudSecurityGroupRead(t *testing.T) {
+	RequiredVars := map[string]string{
+		"Region": "ap-beijing",
+	}
+	GetRequiredEnvVars(RequiredVars)
+	config := Config{
+		SecretId:  RequiredVars["SecretId"],
+		SecretKey: RequiredVars["SecretKey"],
+		Region:    RequiredVars["Region"],
+	}
+	resource := dataSourceTencentCloudSecurityGroup()
+	d := resource.Data(nil)
+	m, _ := config.Client()
+	dataSourceTencentCloudSecurityGroupRead(d, m)
+}
+
 func TestAccDataSourceTencentCloudSecurityGroup_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:  func() { testAccPreCheck(t) },

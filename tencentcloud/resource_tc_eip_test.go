@@ -10,6 +10,39 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
+func TestResourceTencentCloudEipCreate(t *testing.T) {
+	RequiredVars := map[string]string{
+		"Region": "ap-beijing",
+	}
+	GetRequiredEnvVars(RequiredVars)
+	config := Config{
+		SecretId:  RequiredVars["SecretId"],
+		SecretKey: RequiredVars["SecretKey"],
+		Region:    RequiredVars["Region"],
+	}
+	resource := resourceTencentCloudEip()
+	d := resource.Data(nil)
+	m, _ := config.Client()
+	resourceTencentCloudEipCreate(d, m)
+}
+
+func TestResourceTencentCloudEipDelete(t *testing.T) {
+	RequiredVars := map[string]string{
+		"Region": "ap-beijing",
+	}
+	GetRequiredEnvVars(RequiredVars)
+	config := Config{
+		SecretId:  RequiredVars["SecretId"],
+		SecretKey: RequiredVars["SecretKey"],
+		Region:    RequiredVars["Region"],
+	}
+	resource := resourceTencentCloudEip()
+	d := resource.Data(nil)
+	d.SetId("eip-1j5rtpcb")
+	m, _ := config.Client()
+	resourceTencentCloudEipDelete(d, m)
+}
+
 func TestAccTencentCloudEip_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() { testAccPreCheck(t) },
