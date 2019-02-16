@@ -30,10 +30,11 @@ func Provider() *schema.Provider {
 				Sensitive:   true,
 			},
 			"region": &schema.Schema{
-				Type:        schema.TypeString,
-				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc(PROVIDER_REGION, nil),
-				Description: "Region of Tencent Cloud",
+				Type:         schema.TypeString,
+				Required:     true,
+				DefaultFunc:  schema.EnvDefaultFunc(PROVIDER_REGION, nil),
+				Description:  "Region of Tencent Cloud",
+				InputDefault: "ap-guangzhou",
 			},
 		},
 
@@ -88,9 +89,6 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	region, ok := d.GetOk("region")
 	if !ok {
 		region = os.Getenv(PROVIDER_REGION)
-		if region == "" {
-			region = "ap-guangzhou"
-		}
 	}
 	config := Config{
 		SecretId:  secretId.(string),
